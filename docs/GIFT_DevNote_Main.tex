@@ -1,0 +1,308 @@
+\documentclass[12pt,openany]{book}
+
+% Preamble with packages, custom commands, etc.
+\usepackage{commath, amsmath, amsthm}
+\usepackage{polynomial}
+\usepackage{enumerate}
+\usepackage{soul} % highlight
+\usepackage{lipsum}  % Just for generating text
+\usepackage{pifont}% http://ctan.org/pkg/pifont
+
+% Theorem
+\newtheorem{axiom}{Axiom}[chapter]
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[chapter]
+\newtheorem{remark}{Remark}[chapter]
+\newtheorem{exercise}{Exercise}[chapter]
+\newtheorem{example}{Example}[chapter]
+\newtheorem*{note}{Note}
+
+% Colors
+\usepackage[dvipsnames,table]{xcolor}
+\definecolor{titleblue}{RGB}{0,53,128}
+\definecolor{chaptergray}{RGB}{140,140,140}
+\definecolor{sectiongray}{RGB}{180,180,180}
+
+\definecolor{thmcolor}{RGB}{231, 76, 60}
+\definecolor{defcolor}{RGB}{52, 152, 219}
+\definecolor{lemcolor}{RGB}{155, 89, 182}
+\definecolor{corcolor}{RGB}{46, 204, 113}
+\definecolor{procolor}{RGB}{241, 196, 15}
+\definecolor{execolor}{RGB}{90, 128, 127}
+
+\definecolor{comments}{HTML}{6A9955} % A kind of forest green.
+\definecolor{keyword}{HTML}{569CD6} % A medium blue..
+\definecolor{string}{HTML}{CE9178} % A reddish-brown or terra cotta.
+\definecolor{function}{HTML}{DCDCAA} % A beige or light khaki.
+\definecolor{number}{HTML}{B5CEA8} % A muted green.
+\definecolor{type}{HTML}{4EC9B0} %  A turquoise or teal.
+\definecolor{class}{HTML}{4EC9B0} % Similar to types, a turquoise or teal.
+
+% Define custom colors
+\definecolor{commentColor}{rgb}{0.25,0.5,0.35}
+\definecolor{keywordColor}{rgb}{0.6,0.1,0.1}
+\definecolor{stringColor}{rgb}{0.5,0.1,0.5}
+\definecolor{backColor}{rgb}{0,0,0} % Black background
+
+\definecolor{aesblue}{RGB}{30,144,255}
+\definecolor{aesgreen}{RGB}{0,128,0}
+\definecolor{aesred}{RGB}{255,69,0}
+\definecolor{aesgray}{RGB}{112,128,144}
+
+% Fonts
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{newpxtext,newpxmath}
+\usepackage{sectsty}
+\allsectionsfont{\sffamily\color{titleblue}\mdseries}
+
+% Page layout
+\usepackage{geometry}
+\geometry{a4paper,left=.8in,right=.6in,top=.75in,bottom=1in,heightrounded}
+\usepackage{fancyhdr}
+\fancyhf{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[LO]{\nouppercase{\rightmark}}
+\fancyhead[RE]{\nouppercase{\leftmark}}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Chapter formatting
+\usepackage{titlesec}
+\titleformat{\chapter}[display]
+{\normalfont\sffamily\Huge\bfseries\color{titleblue}}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
+\titleformat{\section}
+{\normalfont\sffamily\Large\bfseries\color{titleblue!100!gray}}{\thesection}{1em}{}
+\titleformat{\subsection}
+{\normalfont\sffamily\large\bfseries\color{titleblue!75!gray}}{\thesubsection}{1em}{}
+
+% Table of contents formatting
+\usepackage{tocloft}
+\renewcommand{\cftchapfont}{\sffamily\color{titleblue}\bfseries}
+\renewcommand{\cftsecfont}{\sffamily\color{chaptergray}}
+\renewcommand{\cftsubsecfont}{\sffamily\color{sectiongray}}
+\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}
+
+% TikZ
+\usepackage{tikz}
+\usetikzlibrary{matrix, positioning, arrows.meta, calc, shapes.geometric, shapes.multipart, chains}
+\usetikzlibrary{decorations.pathreplacing,calligraphy}
+
+% Pseudo-code
+\usepackage[linesnumbered,ruled]{algorithm2e}
+\usepackage{algpseudocode}
+\usepackage{setspace}
+\SetKwComment{Comment}{/* }{ */}
+\SetKwProg{Fn}{Function}{:}{end}
+\SetKw{End}{end}
+\SetKw{DownTo}{downto}
+
+% Define a new environment for algorithms without line numbers
+\newenvironment{algorithm2}[1][]{
+	% Save the current state of the algorithm counter
+	\newcounter{tempCounter}
+	\setcounter{tempCounter}{\value{algocf}}
+	% Redefine the algorithm numbering (remove prefix)
+	\renewcommand{\thealgocf}{}
+	\begin{algorithm}
+	}{
+	\end{algorithm}
+	% Restore the algorithm counter state
+	\setcounter{algocf}{\value{tempCounter}}
+}
+
+%Tcolorbox
+\usepackage[most]{tcolorbox}
+\tcbset{colback=white, arc=5pt}
+
+% Listings
+\usepackage{listings}
+\renewcommand{\lstlistingname}{Code}%
+\lstdefinestyle{C}{
+	language=C,
+	backgroundcolor=\color{white},
+	basicstyle=\ttfamily\color{black},
+	commentstyle=\color{green!70!black},
+	keywordstyle={\bfseries\color{purple}},
+	keywordstyle=[2]{\bfseries\color{red}},
+	keywordstyle=[3]{\bfseries\color{type}},
+	keywordstyle=[4]{\bfseries\color{JungleGreen}},
+	keywordstyle=[5]{\bfseries\color{Magenta}},
+	keywordstyle=[6]{\bfseries\color{RoyalBlue}},
+	keywordstyle=[7]{\bfseries\color{Turquoise}},
+	otherkeywords={bool},
+	morekeywords=[2]{;},
+	morekeywords=[3]{u8,u32,u64, size\_t, FILE},
+	morekeywords=[4]{
+		parity
+	},
+	morekeywords=[5]{
+		MOVS\_LEA128CBC\_KAT\_TEST,
+		create\_LEA128CBC\_KAT\_ReqFile,
+		create\_LEA128CBC\_KAT\_FaxFile,
+		create\_LEA128CBC\_KAT\_RspFile
+	},
+	morekeywords=[6]{false, true, MAX, MIN, INITIAL\_BUF\_SIZE},
+	morekeywords=[7]{
+		CryptoData
+	},
+	numberstyle=\tiny\color{gray},
+	stringstyle=\color{purple},
+	showstringspaces=false,
+	breaklines=true,
+	frame=single,
+	framesep=3pt,
+	%frameround=tttt,
+	framexleftmargin=3pt,
+	numbers=left,
+	numberstyle=\small\color{gray},
+	xleftmargin=15pt, % Increase the left margin
+	xrightmargin=5pt,
+	tabsize=4,
+	belowskip=0pt,
+	aboveskip=4pt
+}
+\lstdefinestyle{zsh}{
+	language=bash,                  % Set the language to bash (closest to Zsh)
+	backgroundcolor=\color{backColor},
+	commentstyle=\color{commentColor}\ttfamily,
+	keywordstyle=\color{keywordColor}\bfseries,
+	stringstyle=\color{stringColor}\ttfamily,
+	showspaces=false,               % Don't show spaces as underscores
+	showstringspaces=false,         % Don't highlight spaces in strings
+	breaklines=true,                % Automatic line breaking
+	frame=none,                     % No frame around the code
+	basicstyle=\ttfamily\color{white}, % White basic text color for contrast
+	extendedchars=true,             % Allow extended characters
+	captionpos=b,                   % Caption-position at bottom
+	escapeinside={\%*}{*)},         % Allow LaTeX inside your code
+	morekeywords={echo,ls,cd,pwd,exit,clear,man,unalias,zsh,source}, % Add more keywords
+	upquote=true,                   % Ensure straight quotes are used
+	literate={\$}{{\textcolor{red}{\$}}}1
+	{:}{{\textcolor{red}{:}}}1
+	{~}{{\textcolor{red}{\textasciitilde}}}1, % Color certain characters
+}
+
+% Usage: \lstinputlisting[style=zsh]{sourcefile.sh}
+% or \begin{lstlisting}[style=zsh] ... \end{lstlisting}
+
+
+% Table
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{longtable}
+
+% Hyperlinks
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=titleblue,
+	filecolor=black,      
+	urlcolor=titleblue,
+}
+%Ceiling and Floor Function
+\usepackage{mathtools}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+
+
+\newcommand{\myparagraph}[1]{\paragraph{#1}\mbox{}\\}
+\newcommand{\mathcolorbox}[2]{\colorbox{#1}{$\displaystyle #2$}}
+
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+
+\newcommand{\zero}{\textcolor{red}{\texttt{0}}}
+\newcommand{\one}{\textcolor{red}{\texttt{1}}}
+\newcommand{\binaryfield}{\set{\zero,\one}}
+
+\newcommand{\ECB}{\mathsf{ECB}}
+\newcommand{\CBC}{\mathsf{CBC}}
+\newcommand{\OFB}{\mathsf{OFB}}
+\newcommand{\CFB}{\mathsf{CFB}}
+\newcommand{\CTR}{\mathsf{CTR}}
+\newcommand{\CBCCS}{\mathsf{CBC}\textnormal{-}\mathsf{CS}}
+\newcommand{\EncryptBlk}{\mathsf{EncryptBlk}}
+\newcommand{\DecryptBlk}{\mathsf{DecryptBlk}}
+
+\newcommand{\enc}{\mathsf{enc}}
+\newcommand{\dec}{\mathsf{dec}}
+
+\newcommand{\uk}{\mathsf{UK}}
+\newcommand{\rk}{\mathsf{RK}}
+
+\newcommand{\RotL}{\texttt{RotL}}
+\newcommand{\RotR}{\texttt{RotR}}
+
+\newcommand{\adjacent}{\parallel}
+
+\newcommand{\src}{\mathsf{src}}
+\newcommand{\dsc}{\mathsf{dsc}}
+\newcommand{\state}{\mathsf{state}}
+
+\newcommand{\ie}{\textnormal{i.e.}}
+\newcommand{\eg}{\textnormal{e.g.}}
+
+\newcommand{\yes}{\textcolor{blue}{O}}
+\newcommand{\no}{\textcolor{red}{X}}
+
+\newcommand{\inner}[1]{\left\langle #1\right\rangle}
+\newcommand{\xmark}{\ding{55}}%
+
+\newcommand{\Corr}{\operatorname{\textnormal Corr}}
+
+\newcommand{\gift}{\texttt{GIFT}}
+
+\begin{document}	
+	% Title page
+	\begin{titlepage}
+		\begin{center}
+			{\Huge\textsf{\textbf{GIFT - 64 / 128}}\par}
+			{\Large\textsf{\textbf{- Lightweight Block Cipher -}}\par}
+			\vspace{0.5in}
+			{\Large {Ji Yong-Hyeon}\par}
+			\vspace{1in}
+			\begin{center}
+			\end{center}
+			\vspace{1in}
+			{\large\bf \textsf{Department of Information Security, Cryptology, and Mathematics}\par}
+			{\textsf{College of Science and Technology}\par}
+			{\textsf{Kookmin University}\par}
+			\vspace{.25in}
+			{\large \textsf{\today}\par}
+		\end{center}
+	\end{titlepage}
+	
+	\frontmatter
+	\input{front/list_of_symbols.tex}
+	%	\input{front/abstract.tex}
+	
+	\newpage
+	\tableofcontents
+	
+	\newpage
+	\mainmatter
+	\input{chapters/chapter1.tex} % The Linear Approximation Table
+	% Include more chapters as needed
+	
+	\appendix
+	\input{appendices/appendixA.tex}
+	%	\input{appendices/appendixB.tex}
+	\input{appendices/bibilography.tex}
+	
+	\backmatter
+	% Bibliography, index, etc.
+	
+\end{document}
