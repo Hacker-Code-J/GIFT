@@ -6,15 +6,19 @@
 	\centering
 	\begin{tabular}{|c||c|c|}
 		\hline
-		\textbf{Specification} & \textbf{GIFT-64-128} & \textbf{GIFT-128-128} \\ \hline
+		\textbf{Specification} & \texttt{GIFT-64-128} & \texttt{GIFT-128-128} \\ \hline
 		Block Size (bits)      & 64                   & 128                   \\ \hline
 		Key Size (bits)        & 128                  & 128                   \\ \hline
+		Round Key Size (bits)  & 32                   & 64                    \\ \hline
 		Number of Rounds       & 28                   & 40                    \\ \hline
-		Design Strategy        & Substitution-permutation network & Substitution-permutation network \\ \hline
+		Design Strategy        & Substitution-Permutation Network & Substitution-Permutation Network \\ \hline
 	\end{tabular}
 	\caption{Specifications of GIFT-64-128 and GIFT-128-128}
 	\label{table:gift-specifications}
 \end{table}
+
+\newpage
+\section{Key Schedule and Round Constants}
 
 \newpage
 \section{Round Function}
