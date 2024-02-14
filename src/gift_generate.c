@@ -1,5 +1,18 @@
 #include "gift_generate.h"
 
+void generate_round_constants(u8 rCon[48]) {
+    u8 state = 0b00000001; // 0x01
+    rCon[0] = state;
+    
+    for (u8 i = 1; i < 48; i++) {
+        bool new_bit = ((rCon[i-1] >> 5) & 0x01) ^ ((rCon[i-1] >> 4) & 0x01) ^ 0x01;
+        state <<= 1;
+        state |= new_bit;
+        
+        rCon[i] = state & 0x3F;
+    }
+}
+
 void generate_sbox(u8 S[16]) {
     bool buffer[4], tmp;
 
@@ -26,13 +39,13 @@ void generate_sbox(u8 S[16]) {
 }
 
 
-void generate_permbits64_box(u8 permbits[64]) {
+void generate_permBits64_box(u8 permBits[64]) {
     for (u8 i = 0; i < 64; i++) {
-        permbits[i] = 4 * (i / 16) + 16 * ((3 * ((i % 16) / 4) + (i % 4)) % 4) + (i % 4);
+        permBits[i] = 4 * (i / 16) + 16 * ((3 * ((i % 16) / 4) + (i % 4)) % 4) + (i % 4);
     }
 }
-void generate_permbits128_box(u8 permbits[128]) {
+void generate_permBits128_box(u8 permBits[128]) {
     for (u8 i = 0; i < 128; i++) {
-        permbits[i] = 4 * (i / 16) + 32 * ((3 * ((i % 16) / 4) + (i % 4)) % 4) + (i % 4);
+        permBits[i] = 4 * (i / 16) + 32 * ((3 * ((i % 16) / 4) + (i % 4)) % 4) + (i % 4);
     }
 }

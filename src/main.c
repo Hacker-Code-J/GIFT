@@ -2,17 +2,36 @@
 
 int main(void) {
     u8 SBOX[16];
-    u8 permbits[64];
+    u8 permBits[64];
+    u8 invPermBits[64];
+    u8 rCon[48];
 
+    generate_round_constants(rCon);
     generate_sbox(SBOX);
-    generate_permbits64_box(permbits);
+    generate_permBits64_box(permBits);
+
+    for (u8 i = 0; i < 48; i++) {
+        if (i % 16 == 0) puts("");
+        printf("0x%02XU, ", rCon[i]);
+    } puts("");
 
     for (u8 i = 0; i < 16; i++) {
-        printf("S[%u] = %x\n", i, SBOX[i]);
-    }
-    puts("");
+        if (i % 8 == 0) puts("");
+        printf("0x%02XU, ", SBOX[i]);
+    } puts("");
+
     for (u8 i = 0; i < 64; i++) {
-        printf("PermBits[%u] = %u\n", i, permbits[i]);
+        if (i % 8 == 0) puts("");
+        printf("0x%02XU, ", permBits[i]);
+    } puts("");
+
+    for (u8 i = 0; i < 64; i++) {
+        invPermBits[permBits[i]] = i;
     }
+
+    for (u8 i = 0; i < 64; i++) {
+        if (i % 8 == 0) puts("");
+        printf("0x%02XU, ", invPermBits[i]);
+    } puts("");
     return 0;
 }

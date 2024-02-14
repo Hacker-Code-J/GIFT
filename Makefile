@@ -34,5 +34,8 @@ dir:
 
 rebuild: clean all
 
+run:
+	(cd bin && ./a.out)
+
 leak: 
 	(cd bin && valgrind --leak-check=full --show-leak-kinds=all ./a.out)

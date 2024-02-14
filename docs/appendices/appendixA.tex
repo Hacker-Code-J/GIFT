@@ -1,5 +1,57 @@
-\chapter{Additional Data A}
+\chapter{Generation of Tables}
 
-\section{Substitution-BOX}
+\section{Round Constants}
+\begin{note}[LFSR]
+	\[
+	c_5\adjacent c_4\adjacent c_3\adjacent c_2\adjacent c_1\adjacent c_0\gets
+	c_4\adjacent c_3\adjacent c_2\adjacent c_1\adjacent c_0\adjacent (c_5\oplus c_4\oplus 1)
+	\]
+\end{note}
+\begin{lstlisting}[style=C]
+void generate_round_constants(u8 rCon[48]) {
+	u8 state = 0x01;
+	rCon[0] = state;
+	
+	for (u8 i = 1; i < 48; i++) {
+		bool new_bit = 
+			((rCon[i-1] >> 5) & 0x01) ^
+			((rCon[i-1] >> 4) & 0x01) ^ 0x01;
+		state <<= 1;
+		state |= new_bit;
+		
+		rCon[i] = state & 0x3F; // 3F = 0011 1111
+	}
+}
+\end{lstlisting}
+
+\newpage
+\section{GIFT S-BOX}
+\begin{lstlisting}[style=C]
+void generate_sbox(u8 S[16]) {
+	bool buffer[4], tmp;
+	
+	for (u8 i = 0; i < 16; i++) {
+		buffer[0] = (i >> 0) & 1;
+		buffer[1] = (i >> 1) & 1;
+		buffer[2] = (i >> 2) & 1;
+		buffer[3] = (i >> 3) & 1;
+		
+		buffer[1] = buffer[1] ^ (buffer[0] & buffer[2]);
+		tmp       = buffer[0] ^ (buffer[1] & buffer[3]);
+		buffer[2] = buffer[2] ^ (tmp       | buffer[1]);
+		buffer[0] = buffer[3] ^ buffer[2];
+		buffer[1] = buffer[1] ^ buffer[0];
+		buffer[0] = !(buffer[0]);
+		buffer[2] = buffer[2] ^ (tmp       & buffer[1]);
+		buffer[3] = tmp;
+		
+		S[i] = (u8)buffer[3] << 3 |
+		(u8)buffer[2] << 2 |
+		(u8)buffer[1] << 1 |
+		(u8)buffer[0];
+	}
+}
+\end{lstlisting}
+
 
 % Appendix A content
