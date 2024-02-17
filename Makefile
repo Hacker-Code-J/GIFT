@@ -7,7 +7,7 @@ SRCDIR=./src
 TESTDIR=./test
 INCDIR=./include
 
-OBJS=$(OBJDIR)/gift_generate.o \
+OBJS=$(OBJDIR)/gift_generate.o $(OBJDIR)/gift_utils.o \
 	$(OBJDIR)/gift_key_schedule.o \
 	$(OBJDIR)/gift_core.o \
 	$(OBJDIR)/main.o
