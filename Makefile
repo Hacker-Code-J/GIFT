@@ -4,10 +4,12 @@ LDFLAGS=
 OBJDIR=./obj
 BINDIR=./bin
 SRCDIR=./src
-TESTDIR=./tests
+TESTDIR=./test
 INCDIR=./include
 
 OBJS=$(OBJDIR)/gift_generate.o \
+	$(OBJDIR)/gift_key_schedule.o \
+	$(OBJDIR)/gift_core.o \
 	$(OBJDIR)/main.o
 
 TARGET=$(BINDIR)/a.out
@@ -23,8 +25,6 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	$(CC) $(CFLAGS) -MMD -MP -c $< -o $@
 
 -include $(OBJS:.o=.d)
-
-$(OBJDIR)/gift_generate.o: $(SRCDIR)/gift_generate.c $(INCDIR)/gift_generate.h
 
 clean:
 	rm -f $(OBJS) $(TARGET) $(OBJDIR)/*.d

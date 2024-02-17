@@ -1,6 +1,8 @@
 #include "gift_generate.h"
 
-int main(void) {
+int main(int argc, char** argv) {
+
+#if 1
     u8 SBOX[16];
     u8 permBits[64];
     u8 invPermBits[64];
@@ -11,7 +13,7 @@ int main(void) {
     generate_permBits64_box(permBits);
 
     for (u8 i = 0; i < 48; i++) {
-        if (i % 16 == 0) puts("");
+        if (i % 8 == 0) puts("");
         printf("0x%02XU, ", rCon[i]);
     } puts("");
 
@@ -33,5 +35,6 @@ int main(void) {
         if (i % 8 == 0) puts("");
         printf("0x%02XU, ", invPermBits[i]);
     } puts("");
+#endif
     return 0;
 }
