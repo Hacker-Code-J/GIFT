@@ -1,4 +1,5 @@
 #include "gift_config.h"
+#include "gift_utils.h"
 
 #ifndef _GIFT_KEY_SCHEDULE_H
 #define _GIFT_KEY_SCHEDULE_H
@@ -11,5 +12,9 @@ static const u8 rCon[48] = {
     0x31U, 0x23U, 0x06U, 0x0DU, 0x1BU, 0x36U, 0x2DU, 0x1AU, 
     0x34U, 0x29U, 0x12U, 0x24U, 0x08U, 0x11U, 0x22U, 0x04U
 };
+
+void gift64_getRoundKey(u8 rKey[4], u8 key[16]);
+void gift128_getRoundKey(u8 rKey[8], u8 key[16]);
+void gift_updateKey(u8 key[16]);
 
 #endif /* _GIFT_KEY_SCHEDULE_H */
