@@ -4,7 +4,7 @@
 #ifndef _GIFT_KEY_SCHEDULE_H
 #define _GIFT_KEY_SCHEDULE_H
 
-static const u8 rCon[48] = {
+static const u8 gift_rCon[48] = {
     0x01U, 0x03U, 0x07U, 0x0FU, 0x1FU, 0x3EU, 0x3DU, 0x3BU, 
     0x37U, 0x2FU, 0x1EU, 0x3CU, 0x39U, 0x33U, 0x27U, 0x0EU, 
     0x1DU, 0x3AU, 0x35U, 0x2BU, 0x16U, 0x2CU, 0x18U, 0x30U, 
@@ -13,8 +13,8 @@ static const u8 rCon[48] = {
     0x34U, 0x29U, 0x12U, 0x24U, 0x08U, 0x11U, 0x22U, 0x04U
 };
 
-void gift64_getRoundKey(u8 rKey[4], u8 key[16]);
-void gift128_getRoundKey(u8 rKey[8], u8 key[16]);
-void gift_updateKey(u8 key[16]);
+void gift64_getRoundKey(u8* rKey, u8* key);
+void gift128_getRoundKey(u8* rKey, u8* key);
+void gift_updateKey(u8* key);
 
 #endif /* _GIFT_KEY_SCHEDULE_H */

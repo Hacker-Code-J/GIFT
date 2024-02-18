@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdint.h>
 #include <stdbool.h>
+#include <x86intrin.h> // for __rdtscp and __rdtsc
 
 #ifndef _GIFT_CONFIG_H
 #define _GIFT_CONFIG_H
