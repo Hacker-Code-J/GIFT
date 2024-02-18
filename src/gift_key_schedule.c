@@ -1,7 +1,7 @@
 #include "gift_key_schedule.h"
 #include "gift_utils.h"
 
-void gift64_getRoundKey(u8 rKey[4], u8 key[16]) {
+void gift64_getRoundKey(u8* rKey, u8* key) {
     u32 word_rKey[1];
     u32 word_key[4];
 
@@ -10,7 +10,7 @@ void gift64_getRoundKey(u8 rKey[4], u8 key[16]) {
     wordToByte(rKey, word_rKey, 1);
 }
 
-void gift128_getRoundKey(u8 rKey[8], u8 key[16]) {
+void gift128_getRoundKey(u8* rKey, u8* key) {
     u32 word_rKey[2];
     u32 word_key[4];
 
@@ -20,7 +20,7 @@ void gift128_getRoundKey(u8 rKey[8], u8 key[16]) {
     wordToByte(rKey, word_rKey, 2);
 }
 
-void gift_updateKey(u8 key[16]) {
+void gift_updateKey(u8* key) {
     u32 state[4];
     u32 word_key[4];
 

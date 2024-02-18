@@ -42,4 +42,6 @@ void gift64_decryption(u8* dst, const u8* src, const u8* key);
 void gift128_encryption(u8* dst, const u8* src, const u8* key);
 void gift128_decryption(u8* dst, const u8* src, const u8* key);
 
+void gift64_encryption_dev(u8* dst, const u8* src, const u8* key);
+
 #endif /* _GIFT_H */
