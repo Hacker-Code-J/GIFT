@@ -13,6 +13,7 @@ int main(int argc, char** argv) {
     stringToByte(MK, keyString);
     stringToByte(PT, intputString);
 
+    printf("PT:\n");
     printByteData(PT, 8);
     gift64_encryption(CT, PT, MK);
 
