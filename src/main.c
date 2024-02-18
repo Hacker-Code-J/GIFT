@@ -4,9 +4,9 @@
 #include "gift.h"
 
 // // Function to measure the encryption time in CPU cycles
-// unsigned long long measure_cycles(uint8_t *dst, const uint8_t *src, const uint8_t *key, size_t num_bytes) {
-//     unsigned int ui;
-//     unsigned long long start, end;
+// u64 measure_cycles(u8 *dst, const u8 *src, const u8 *key, size_t num_bytes) {
+//     u32 ui;
+//     u64 start, end;
     
 //     // Warm up the cache and the function
 //     gift64_encryption(dst, src, key);
@@ -45,26 +45,29 @@ int main(int argc, char** argv) {
     stringToByte(MK, keyString);
     stringToByte(PT, intputString);
 
-    printByteData(PT, 8);
+    // printByteData(PT, 8);
     gift64_encryption(CT, PT, MK);
-    printByteData(CT, 8);
+    // printByteData(CT, 8);
 
-    // const size_t num_bytes = 8; // Change this based on your requirement
-    // uint8_t src[num_bytes], dst[num_bytes], key[16]; // Adjust key size according to the algorithm requirement
+    for (int i = 0; i < 1000; i++) {
+        measure_cpu_cycle(gift64_encryption, CT, PT, MK);
+        printf("0\n");
+    }
+    // const size_t num_bytes = 1024; // Change this based on your requirement
+    // u8 src[num_bytes], dst[num_bytes], key[16]; // Adjust key size according to the algorithm requirement
 
     // // Initialize src and key with some values
     // for (size_t i = 0; i < num_bytes; i++) {
-    //     src[i] = (uint8_t)i; // Just an example initialization
+    //     src[i] = (u8)i; // Just an example initialization
     // }
     // for (size_t i = 0; i < 16; i++) {
-    //     key[i] = (uint8_t)(i + 1); // Example key initialization
+    //     key[i] = (u8)(i + 1); // Example key initialization
     // }
 
-    // unsigned long long cycles = measure_cycles(dst, src, key, num_bytes);
+    // u64 cycles = measure_cycles(dst, src, key, num_bytes);
     // double cycles_per_byte = (double)cycles / num_bytes;
 
-    // printf("Total cycles: %llu\n", cycles);
-    // printf("Cycles per byte: %.2f\n", cycles_per_byte);
+    // printf("%.2f c/B\n", cycles_per_byte);
 
 #if 0
     u8 SBOX[16];

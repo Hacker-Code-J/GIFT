@@ -9,8 +9,9 @@ void gift64_encryption(u8* dst, const u8* src, const u8* key) {
     bool bit[64], perm_bit[64];
     
     u8 uKey[16];
-    u8 rKey[4];
     memcpy(uKey, key, 16);
+
+    u8 rKey[4];
 
     memcpy(state, src, 8);
     for (r = 0; r < 28; r++) {

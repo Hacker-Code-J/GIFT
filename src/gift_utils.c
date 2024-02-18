@@ -40,3 +40,40 @@ void printByteData(u8* data, size_t byteLen) {
         printf("%02x:", data[i]);
     } puts("");
 }
+
+// Function to measure CPU cycle used by a function
+void measure_cpu_cycle(void (*func)(u8*, const u8*, const u8*), u8* dst, const u8* src, const u8* key) {
+    u32 ui;
+    u64 start, end;
+    const u64 num_runs = 10000;
+    func(dst, src, key);
+
+    start = __rdtsc();
+    for (int i = 0; i < num_runs; i++)
+        func(dst, src, key);
+    end = __rdtscp(&ui);
+    
+    printf("%ld\n", (end - start) / num_runs);
+}
+
+// Function to measure CPU time used by a function
+void measure_cpu_time(void (*func)(u8*, const u8*, const u8*), u8* dst, const u8* src, const u8* key) {
+    struct timespec start, end;
+    const long num_runs = 10000;
+
+    func(dst, src, key);
+    // Start time
+    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);
+
+    // Call the function
+    for (i32 i = 0; i < num_runs; i++) {
+        func(dst, src, key);
+    }
+
+    // End time
+    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);
+
+    // Calculate and print the CPU time used in nanoseconds
+    u64 ns = (end.tv_sec - start.tv_sec) * 1000000000L + (end.tv_nsec - start.tv_nsec);
+    printf("%ld\n", ns / num_runs);
+}

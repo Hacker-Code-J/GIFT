@@ -1,8 +1,11 @@
+#define _POSIX_C_SOURCE 200809L
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
 #include <stdbool.h>
+#include <time.h>
 #include <x86intrin.h> // for __rdtscp and __rdtsc
 
 #ifndef _GIFT_CONFIG_H
