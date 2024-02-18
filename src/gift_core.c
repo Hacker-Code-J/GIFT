@@ -14,8 +14,10 @@ void gift64_encryption(u8* dst, const u8* src, const u8* key) {
 
     memcpy(state, src, 8);
     for (r = 0; r < 28; r++) {
+        // SubCells
         for (i = 0; i < 8; i++)
             state[i] = (GS[state[i] >> 4] << 4) | GS[state[i] & 0xF];
+        
         // PermBits
         for (u8 byteIndex = 0; byteIndex < 8; byteIndex++) {
             u8 bitIndex = byteIndex * 8;
@@ -28,7 +30,6 @@ void gift64_encryption(u8* dst, const u8* src, const u8* key) {
             bit[bitIndex + 6] = (state[byteIndex] & 0x40) != 0;
             bit[bitIndex + 7] = (state[byteIndex] & 0x80) != 0;
         }
-
         for (i = 0; i < 64; i++)
             perm_bit[permBits64[i]] = bit[i];
         
@@ -52,7 +53,6 @@ void gift64_encryption(u8* dst, const u8* src, const u8* key) {
         perm_bit[56] ^= (rKey[1] >> 6) & 1;
         perm_bit[60] ^= (rKey[1] >> 7) & 1;
 
-        // For the third and fourth loops, apply similar logic
         perm_bit[ 1] ^= (rKey[2]     ) & 1;;
         perm_bit[ 5] ^= (rKey[2] >> 1) & 1;
         perm_bit[ 9] ^= (rKey[2] >> 2) & 1;
@@ -80,9 +80,8 @@ void gift64_encryption(u8* dst, const u8* src, const u8* key) {
         perm_bit[23] ^= (gift_rCon[r] >> 5) & 1;
         perm_bit[63] ^= 1;
 
-        for (i = 0; i < 8; i++) { // Iterate over each group of 8 bits
-            state[i] = 0; // Initialize the byte
-            // Manually unroll the loop over each bit in the group
+        for (i = 0; i < 8; i++) {
+            state[i] = 0;
             state[i] |= perm_bit[i * 8 + 0] ? (1 << 0) : 0;
             state[i] |= perm_bit[i * 8 + 1] ? (1 << 1) : 0;
             state[i] |= perm_bit[i * 8 + 2] ? (1 << 2) : 0;
