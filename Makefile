@@ -40,7 +40,7 @@ run:
 leak: 
 	(cd bin && valgrind --leak-check=full --show-leak-kinds=all ./a.out)
 
-comp:
-	(cd bin && ./a.out > speed.txt)
-	(cd bin && mv speed.txt ../view/)
+cycle:
+	(cd bin && ./a.out > cycle.txt)
+	(cd bin && mv cycle.txt ../view/)
 	(cd view && python3 compare_cycle.py)

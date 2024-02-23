@@ -7,6 +7,7 @@
 #include <stdbool.h>
 #include <time.h>
 #include <x86intrin.h> // for __rdtscp and __rdtsc
+#include <inttypes.h> // for PRIu64 macro
 
 #ifndef _GIFT_CONFIG_H
 #define _GIFT_CONFIG_H
